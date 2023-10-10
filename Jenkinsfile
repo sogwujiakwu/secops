@@ -10,13 +10,13 @@ pipeline {
             remote.name = "controlnode"
             remote.host = "10.1.0.128"
             remote.allowAnyHosts = true
-
+            remote.pty = true
             withCredentials([sshUserPrivateKey(credentialsId: 'sshUser', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
                 remote.user = userName
                 remote.identityFile = identity
                 stage("Enforce with Ansible") {
-                  sshCommand remote: remote, sudo: true, pty: true, command: 'cd /home/devops/secops/ansible && git pull origin'
-                  sshCommand remote: remote, sudo: true, pty: true, command: 'cd /home/devops/secops/ansible && ansible-playbook compliance.yaml'
+                  sshCommand remote: remote, sudo: true, command: 'cd /home/devops/secops/ansible && git pull origin'
+                  sshCommand remote: remote, sudo: true, command: 'cd /home/devops/secops/ansible && ansible-playbook compliance.yaml'
               }
                 /*stage("Placeholder Stage...") {
                   sshCommand remote: remote, sudo: true, command: 'echo "add your stuff here....."'
