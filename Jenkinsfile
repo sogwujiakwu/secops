@@ -16,7 +16,7 @@ pipeline {
                 remote.identityFile = identity
                 stage("Enforce with Ansible") {
                   sshCommand remote: remote, command: 'cd /home/devops/secops/ansible && git pull origin'
-                  sshCommand remote: remote, sudo: true, command: 'cd /home/devops/secops/ansible && ansible-playbook compliance.yaml'
+                  sshCommand remote: remote, sudo: true, command: 'ansible-playbook /home/devops/secops/ansible/compliance.yaml'
               }
                 /*stage("Placeholder Stage...") {
                   sshCommand remote: remote, sudo: true, command: 'echo "add your stuff here....."'
